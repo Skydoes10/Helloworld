@@ -43,9 +43,6 @@ public class Client {
                 br.close();
             } catch (Exception e) {
             }
-
-            // response = service.printString("Hello World from a remote client!");
-
         }
     }
 }

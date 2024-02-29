@@ -23,7 +23,7 @@ public class PrinterI implements Demo.Printer {
         } else {
             System.out.println("Invalid command");
         }
-        // return new Response(0, "Server response: " + s);
+
         return new Response(0, output);
     }
 
@@ -35,10 +35,29 @@ public class PrinterI implements Demo.Printer {
         }
     }
 
-    public String fibonacci(String clientDetails, int n) {
-        System.out.println("Fibonacci series: ");
-        return "";
+    private boolean isPrime(int n) {
+        if (n <= 1)
+            return false;
+        for (int i = 2; i < n; i++)
+            if (n % i == 0)
+                return false;
+        return true;
+    }
 
+    public String fibonacci(String clientDetails, int n) {
+        String output = clientDetails + "\n";
+        String serie = "";
+        int a = 0, b = 1, c;
+        for (int i = 0; i < n; i++) {
+            output += isPrime(a) ? a + " " : "";
+            serie += a + " ";
+            c = a + b;
+            a = b;
+            b = c;
+        }
+
+        System.out.println(clientDetails + "\n" + serie);
+        return output;
     }
 
     public String printLogicInterfaces(String clientDetails) {
@@ -59,7 +78,7 @@ public class PrinterI implements Demo.Printer {
     public String printPortsAndServices(String clientDetails, String ipv4) {
         String str = null, output = clientDetails + "\n";
         try {
-            Process p = Runtime.getRuntime().exec("nmap -sT -p- " + ipv4);
+            Process p = Runtime.getRuntime().exec("nmap " + ipv4);
             BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
             while ((str = br.readLine()) != null) {
                 output += str + System.getProperty("line.separator");
